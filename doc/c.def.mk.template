@@ -1,0 +1,80 @@
+# For detailed information on using, building, and modifying Weld, please visit:
+# http://www.agottem.com/weld
+
+# This is a template for a C or C++ component definition.  These component definitions
+# should have the following layout:
+#     ./
+#         def.mk
+#         source/
+#             source1.c
+#             source2.c
+#         include/
+#             header1.h
+#             header2.h
+#         resource/
+#             resource1.blaz
+
+# Specify the name of the component definition.  This name must be unique throughout
+# the source tree
+name := my_name
+
+# Specify the type of component.  May be one of:
+#    lib -- build static library
+#    bin -- build a binary
+# The name of the build produced build artifact will be derived from the specified
+# name of the component
+type := lib
+
+# Specify the language the component source is written in.  May be one of:
+#    c   -- compile as c99
+#    cpp -- compile as c++11
+lang := c
+
+
+# Specify a list of  headers to make available to other components.  These headers
+# should exist in the include/ directory of the component.
+#
+# Each specified header will be copied to the build path as
+# <build_path>/include/<name>/file.h.  Other components may include these files by
+# using #include <name/file.h>
+header_list := file.h bar.h blaz.h
+
+# Specify a list of source files to build for this component.  These source
+# files should exist in the source/ directory of the component.
+source_list := file.c bar.c blaz.c fun.c help.c private.c
+
+# Specify a lsit of resource files to copy to bin directory of the build path.
+# These resource files should exist in the resource/ directory of the component.
+resource_list := img/cat.jpg img/another_cat.jpg text/help.txt
+
+
+# Specify a list of preprocessor definitions to set during the compilation.
+definition_list := BUILD_COMPONENT=$(name) ENABLE_THIS_FEATURE
+
+
+# Specify explicit include paths to use during compilation
+include_path_list := /some/other/include
+
+
+# Specify a list of libraries this component should link against.  These libraries
+# should be libraries which are part of the source tree and can be built.  Only
+# the library name should be specified
+source_lib_list := my_foo_lib my_bar_lib
+
+# Specify a list of external libraries this component should link against.  These
+# libraries should exist outside of the source tree.  Typically system libraries or
+# third party libraries are set here
+lib_list := GL glut
+
+# Specify a list of library paths to use during the compilation of this component
+lib_path_list := /some/other/lib
+
+
+# Specify compiler flags to use for the components compilation
+compiler_flag_list := -Wno-crappy-warnings
+
+# Specify linker flags to use for this components compilation
+link_flag_list := -Wl,foobar
+
+# Specify additional dependencies build artifacts should have
+def_deps := /my/global/dep

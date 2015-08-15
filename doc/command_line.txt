@@ -1,0 +1,91 @@
+For detailed information on using, building, and modifying Weld, please visit:
+http://www.agottem.com/weld
+
+Weld provides a variety of options when building.  When building, the following variables may be set
+either in your environment or on the command line:
+
+    source_path   -- set to the root of the project
+    build_path    -- set to the directory all build output should be directed to
+    config_file   -- arbitrary file to include with the build which may set additional settings
+    mode          -- set to 'release' or 'debug' to build the desired binary
+    arch          -- set to the desired architecture such as 'i686' or 'amd64'
+    platform      -- set to the desired platform target such as 'unix' or 'win32'
+    c_toolchain   -- set to the toolchain to use for the build such as 'gcc'
+    show_progress -- set to 1 to print the name of each artifact being built
+    debug_weld    -- set to 1 to print out internal weld debugging info
+
+The above variables may be simply set in your weld project's top-level makefile or in a config file
+which is specified by the "config_file" variable.  For instance, you could define the config file
+"example_config.mk" below:
+
+example_config.mk:
+    source_path := /my/projects/fun
+    build_path  := /my/projects/build
+    mode        := debug
+    arch        := i686
+    platform    := linux
+    c_toolchain := gcc
+
+You could then build with the command line:
+    make config_file=example_config.mk
+
+Alternatively you could simply add these options to your project's top-level makefile:
+
+makefile:
+    source_path := /my/projects/fun
+    build_path  := /my/projects/build
+    mode        := debug
+    arch        := i686
+    platform    := linux
+    c_toolchain := gcc
+
+    include $(weld_path)/weld.mk
+
+With the above, you could then simply build with the command line:
+    make
+
+Once your weld project is setup, you can build by specifying the following targets
+
+    # build everything
+    make
+    make build
+
+    # clean everything
+    make clean
+
+    # build just a single component and it's dependencies
+    make my_component_name
+
+    # build just a single source file for a component
+    make my_component_name/source.o
+
+    # install just a component's headers
+    make my_component_name_headers
+
+    # clean just a component's headers
+    make clean_my_component_name_headers
+
+    # install just a component's resources
+    make my_component_name_resources
+
+    # clean just a component's resources
+    make clean_my_component_name_resources
+
+    # make just a library
+    make libmy_component_name.a
+
+    # make just a binary
+    make bin/my_component_name
+
+The above make commands may be a bit verbose for your taste as each command is echoed
+to the terminal.  For something a little easier to read, you might prefer:
+    make --quiet show_progress=1
+
+There are quite a few options and possibilities involved here.  For the best experience,
+I recommend doing something like this:
+    alias weld="make -C /my/project/root --quiet show_progress=1""
+
+The above will enable you to, from any directory, do the following:
+    weld my_component
+    weld clean
+    weld

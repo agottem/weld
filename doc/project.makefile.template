@@ -1,0 +1,30 @@
+# For detailed information on using, building, and modifying Weld, please visit:
+# http://www.agottem.com/weld
+
+# There should be just a single makefile for an entire weld project.  A weld
+# project is expected to consist of many libraries, binaries, and resources.
+# This top level makefile should specify defaults for the project and include
+# the weld.mk file.
+
+# Specify sane defaults -- the projects source lives in the same directory
+# as this makefile, the build will be output to the ./build folder, and
+# sane defaults for the rest
+source_path := .
+build_path  := ./build
+arch        := amd64
+mode        ?= debug
+shell_name  := sh
+platform    := unix
+unix_flavor := linux
+c_toolchain := gcc
+
+# Specify additional settings applicable to every component
+global_compiler_flag_list := -Wall
+global_link_flags         := -Wl,foo
+global_definition_list    := MY_PROJECT_NAME
+global_include_path_list  := /third/party/include/path
+global_lib_path           := /third/party/lib/path
+
+
+# Include the "weld.mk" file in the weld build system directory
+include /path/to/weld/install/weld.mk

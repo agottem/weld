@@ -1,0 +1,21 @@
+# For detailed information on using, building, and modifying Weld, please visit:
+# http://www.agottem.com/weld
+
+# This is a template for a resource only component definition.  These
+# component definitions should have the following layout:
+#     ./
+#         def.mk
+#         resource/
+#             resource1.blaz
+#             resource2.bar
+
+# Specify the name of the component definition.  This name must be unique throughout
+# the source tree
+name := my_res
+
+# Specify a list of resource files to copy to bin directory of the build path.
+# These resource files should exist in the resource/ directory of the component.
+resource_list := img/cat.jpg img/another_cat.jpg text/help.txt
+
+# Specify additional dependencies each resource build artifact should have
+def_deps := /some/file

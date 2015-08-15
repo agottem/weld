@@ -1,0 +1,50 @@
+For detailed information on using, building, and modifying Weld, please visit:
+http://www.agottem.com/weld
+
+Weld is a build system for GNU make.  It is an implementation of a non-recursive make system.  Weld
+is intended for C and C++ projects, however, could be easily extended to other languages.  Weld is
+designed to work on Linux or FreeBSD using GCC and Windows using MinGW.
+
+To start using Weld, first create a directory to host all the source for your project.  A typical
+project is expected to be composed of many libraries and binaries with a single top level makefile.
+An example layout may be something like:
+
+    my_project/
+        makefile
+
+        libs/
+            gui/
+                graph/
+                    def.mk
+                    source/...
+                    include/...
+                button/
+                    def.mk
+                    source/...
+                    include/...
+            data/
+                compute/
+                    compute.mk
+                    source/...
+                    include/...
+        bins/
+            my_app/
+                def.mk
+                source/...
+
+The above example lays out a project with a handful of libs and a binary.  To build, simply type
+make at the top-level.  Weld will do a simple find for any files name "def.mk".  Each "def.mk" is
+then included and a complete dependency tree is constructed.  This means make knows how every build
+artifact is related and what order things need to be built in.  If make's "-j" option is used you'll
+perform a build with optimal parallelization.
+
+Additionally, because the full dependency tree is known, incremental builds will only ever build
+precisely what is needed.  If dependencies haven't changed, no time will be wasted needlessly
+rebuilding components.
+
+In addition to Weld generating a complete dependency tree for you, it'll also define useful targets.
+For instance, "make libcompute.a" will build just the compute library and any dependencies.  "make
+my_app" will build just my_app and any dependencies.  "make clean" will clean the project.
+
+For details on specifying def.mk files, see the "c.def.mk.template" or "resource.def.mk.template"
+files.  For insight into the weld command line, see the "command_line.txt" file.
