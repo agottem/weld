@@ -30,6 +30,14 @@ type := lib
 #    cpp -- compile as c++11
 lang := c
 
+# Optionally specify source files should live in "src/" instead of "source/"
+def_source_subdir := src
+
+# Optionally specify headers live in "inc/" instead of "include/"
+def_include_subdir := include
+
+# Optionally specify resources live in "res/" instead of "resource/"
+def_resource_subdir := res
 
 # Specify a list of  headers to make available to other components.  These headers
 # should exist in the include/ directory of the component.

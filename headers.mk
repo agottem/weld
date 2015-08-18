@@ -24,7 +24,7 @@ endif
 
 
 # Figure out the include path for this component definition
-def_header_path        := $(def_path)/include
+def_header_path        := $(def_path)/$(def_include_subdir)
 def_header_output_path := $(header_output_path)/$(name)
 
 define header_file_rule

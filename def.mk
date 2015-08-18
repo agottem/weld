@@ -12,22 +12,25 @@ define def_file_rule
 
     # Clear out all possible variables a component definition file
     # may define
-    def_file           :=
-    def_path           :=
-    def_deps           :=
-    name               :=
-    type               :=
-    lang               :=
-    header_list        :=
-    resource_list      :=
-    source_list        :=
-    definition_list    :=
-    source_lib_list    :=
-    lib_list           :=
-    lib_path_list      :=
-    include_path_list  :=
-    compiler_flag_list :=
-    link_flag_list     :=
+    def_file            :=
+    def_path            :=
+    def_deps            :=
+    def_include_subdir  :=
+    def_source_subdir   :=
+    def_resource_subdir :=
+    name                :=
+    type                :=
+    lang                :=
+    header_list         :=
+    resource_list       :=
+    source_list         :=
+    definition_list     :=
+    source_lib_list     :=
+    lib_list            :=
+    lib_path_list       :=
+    include_path_list   :=
+    compiler_flag_list  :=
+    link_flag_list      :=
 
 
     $$(call debug_info,including def: $(1))
@@ -35,6 +38,19 @@ define def_file_rule
     def_file := $(1)
     def_path := $$(call def_file_to_root_path,$$(def_file))
     def_deps := $$(def_file) $$(config_file) $$(def_deps)
+
+
+    ifeq ($$(def_include_subdir),)
+        def_include_subdir := $$(include_subdir)
+    endif
+
+    ifeq ($$(def_source_subdir),)
+        def_source_subdir := $$(source_subdir)
+    endif
+
+    ifeq ($$(def_resource_subdir),)
+        def_resource_subdir := $$(resource_subdir)
+    endif
 
 
     # Include the found component definition file

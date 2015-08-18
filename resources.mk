@@ -18,7 +18,7 @@ resource_goal_list :=
 
 
 # Figure out the resource path for this component definition
-def_resource_path := $(def_path)/resource
+def_resource_path := $(def_path)/$(def_resource_subdir)
 
 define resource_file_rule
 
