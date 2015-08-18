@@ -11,6 +11,18 @@ source_path ?= .
 build_path  ?= ./build
 arch        ?= amd64
 mode        ?= debug
-shell_name  ?= $(if $(WINDIR),cmd,sh)
-platform    ?= $(if $(WINDIR),unix,win32)
-c_toolchain ?= gcc
+platform    ?= $(if $(WINDIR),win32,unix)
+
+ifeq ($(platform),win32)
+	shell_name ?= cmd
+else
+	shell_name ?= sh
+	OS := $(shell uname)
+	ifeq ($(OS),Linux)
+		unix_flavor ?= linux
+		c_toolchain ?= gcc
+	else ifeq ($(OS),Darwin)
+		unix_flavor ?= darwin
+		c_toolchain ?= clang
+	endif
+endif
