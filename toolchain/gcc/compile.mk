@@ -24,7 +24,7 @@ full_compile_goal_path :=
 
 
 c_toolchain_path    := $(weld_path)/toolchain/gcc
-def_source_path     := $(def_path)/$(source_subdir)
+def_source_path     := $(def_path)/$(def_source_subdir)
 def_obj_output_path := $(obj_output_path)/$(name)
 
 
