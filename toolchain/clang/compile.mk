@@ -22,7 +22,7 @@ full_compile_goal_path :=
 
 
 c_toolchain_path    := $(weld_path)/toolchain/clang
-def_source_path     := $(def_path)/$(source_subdir)
+def_source_path     := $(def_path)/$(def_source_subdir)
 def_obj_output_path := $(obj_output_path)/$(name)
 
 
@@ -43,16 +43,16 @@ definition_list := $(global_definition_list) $(definition_list)
 
 # Specify a default set of compiler flags in addition to those
 # flags specified by the component definition
-compiler_flag_list := -g                              \
-                      -fstrict-aliasing               \
-                      -funsigned-char                 \
-                      -Wall                           \
-                      -Winline                        \
-                      -Wmissing-field-initializers    \
-                      -Wsign-compare                  \
-                      -Wstrict-aliasing=1             \
-                      -pedantic                       \
-                      $(global_compiler_flag_list)    \
+compiler_flag_list := -g                           \
+                      -fstrict-aliasing            \
+                      -funsigned-char              \
+                      -Wall                        \
+                      -Winline                     \
+                      -Wmissing-field-initializers \
+                      -Wsign-compare               \
+                      -Wstrict-aliasing=1          \
+                      -pedantic                    \
+                      $(global_compiler_flag_list) \
                       $(compiler_flag_list)
 
 # Add the global link flags to the component definition's list
@@ -123,7 +123,7 @@ $(obj_goal_list) : | headers
 $(obj_goal_list) : | $(def_obj_output_path)
 $(obj_goal_list) :
 	$(call print_progress,$(obj_alias))
-	$(strip                                                                                       \
+	$(strip                                                                                   \
         $(compile_command) -o $(call path_to_native,$(obj_output_path)/$(obj_alias))              \
             -MD -MP -MF $(call path_to_native,$(obj_output_path)/$(obj_alias).d) -MQ $(obj_alias) \
             $(compiler_flag_list)                                                                 \
@@ -147,17 +147,17 @@ $(compile_goal) :
 	$(call print_progress,$(compile_goal))
     ifeq ($(type), lib)
 	    $(call remove_files,$(call path_to_native,$(compile_goal_path)/$(compile_goal)))
-	    $(strip                                                             \
+	    $(strip                                                         \
             ar rcs                                                          \
                 $(link_flag_list)                                           \
                 $(call path_to_native,$(compile_goal_path)/$(compile_goal)) \
                 $(call path_to_native,$(obj_goal_file_list)))
     else
-	    $(strip                                                                                   \
-            $(compile_command) -o $(call path_to_native,$(compile_goal_path)/$(compile_goal))     \
-                $(link_flag_list)                                                                 \
-                $(addprefix -L,$(call path_to_native,$(lib_path_list)))                           \
-                $(call path_to_native,$(obj_goal_file_list))                                      \
+	    $(strip                                                                           \
+            $(compile_command) -o $(call path_to_native,$(compile_goal_path)/$(compile_goal)) \
+                $(link_flag_list)                                                             \
+                $(addprefix -L,$(call path_to_native,$(lib_path_list)))                       \
+                $(call path_to_native,$(obj_goal_file_list))                                  \
                 $(addprefix -l,$(lib_list) $(source_lib_list)) )
     endif
 
