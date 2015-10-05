@@ -10,7 +10,6 @@
 c_toolchain_path       :=
 def_source_path        :=
 def_obj_output_path    :=
-compiler_flag_list     :=
 source_file            :=
 def_source_file        :=
 obj_alias              :=
