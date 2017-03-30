@@ -29,5 +29,8 @@ remove_files = $(strip $(if $(wildcard $(1)),rm -f $(call path_to_native,$(wildc
 # Create a directory tree
 make_directory = $(strip $(if $(wildcard $(1)),,mkdir -p $(call path_to_native,$(1))))
 
+# Remove directory that exists
+remove_directory = $(strip $(if $(wildcard $(1)),rm -rf $(call path_to_native,$(wildcard $(1))),))
+
 # Print to stdout
 print = echo $(1)

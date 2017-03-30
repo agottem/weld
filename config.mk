@@ -8,7 +8,7 @@
 
 
 source_path     ?= .
-build_path      ?= ./build
+build_path      ?= ./build/out
 include_subdir  ?= include
 source_subdir   ?= source
 resource_subdir ?= resource
@@ -28,6 +28,9 @@ else
     else ifeq ($(OS),Darwin)
         unix_flavor ?= darwin
         c_toolchain ?= clang
+    else
+        unix_flavor ?= unix
+        c_toolchain ?= gcc
     endif
 endif
 
