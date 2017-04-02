@@ -14,22 +14,19 @@ source_subdir   ?= source
 resource_subdir ?= resource
 arch            ?= amd64
 mode            ?= debug
+platform        ?= $(if $(WINDIR),win32,unix)
+shell_name      ?= $(if $(WINDIR),cmd,sh)
 
-platform ?= $(if $(WINDIR),win32,unix)
-ifeq ($(platform),win32)
-    shell_name ?= cmd
-else
-    shell_name ?= sh
-
-    OS := $(shell uname)
-    ifeq ($(OS),Linux)
+ifeq ($(platform),unix)
+    os := $(shell uname)
+    ifeq ($(os),Linux)
         unix_flavor ?= linux
         c_toolchain ?= gcc
-    else ifeq ($(OS),Darwin)
+    else ifeq ($(os),Darwin)
         unix_flavor ?= darwin
         c_toolchain ?= clang
     else
-        unix_flavor ?= unix
+        unix_flavor ?= bsd
         c_toolchain ?= gcc
     endif
 endif
