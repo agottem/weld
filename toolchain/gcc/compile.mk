@@ -12,7 +12,6 @@
 c_toolchain_path       :=
 def_source_path        :=
 def_obj_output_path    :=
-compiler_flag_list     :=
 source_file            :=
 def_source_file        :=
 obj_alias              :=
@@ -48,8 +47,6 @@ definition_list := $(global_definition_list) $(definition_list)
 compiler_flag_list := -g                              \
                       -fstrict-aliasing               \
                       -funsigned-char                 \
-                      -finline-limit=5000             \
-                      --param inline-unit-growth=5000 \
                       -Wall                           \
                       -Winline                        \
                       -Wmissing-field-initializers    \
@@ -143,6 +140,7 @@ $(compile_goal) : compile_goal_path  := $(compile_goal_path)
 $(compile_goal) : obj_goal_file_list := $(obj_goal_file_list)
 $(compile_goal) : lib_path_list      := $(lib_path_list)
 $(compile_goal) : lib_list           := $(lib_list)
+$(compile_goal) : static_lib_list    := $(static_lib_list)
 $(compile_goal) : source_lib_list    := $(source_lib_list)
 $(compile_goal) : $(obj_goal_list)
 $(compile_goal) : $(source_lib_file_list)
@@ -162,7 +160,10 @@ $(compile_goal) :
                 $(link_flag_list)                                                                 \
                 $(addprefix -L,$(call path_to_native,$(lib_path_list)))                           \
                 $(call path_to_native,$(obj_goal_file_list))                                      \
-                -Wl,--start-group $(addprefix -l,$(lib_list) $(source_lib_list)) -Wl,--end-group)
+                -Wl,--start-group                                                                 \
+                $(addprefix -l,$(lib_list) $(source_lib_list))                                    \
+                $(addsuffix .a,$(addprefix -l:lib,$(static_lib_list)))                            \
+                -Wl,--end-group)
     endif
 
 .PHONY : clean_$(name)_def_compile

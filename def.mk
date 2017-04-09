@@ -27,6 +27,7 @@ define def_file_rule
     definition_list     :=
     source_lib_list     :=
     lib_list            :=
+    static_lib_list     :=
     lib_path_list       :=
     include_path_list   :=
     compiler_flag_list  :=
@@ -67,7 +68,7 @@ define def_file_rule
 
         # Include the config file again after including the definition file.
         # This way a config file could specify component-specific settings
-        include $$(config_file)
+        -include $$(config_file)
 
 
         #  If a header list was specified, include header rules

@@ -18,6 +18,12 @@ platform    := unix
 unix_flavor := linux
 c_toolchain := gcc
 
+# GCC toolchain specific options
+
+# Clang and gcc are mostly compatible, so use all the gcc compilation infra but
+# switch the compiler name to clang/clang++
+gcc_opt_use_clang := 1
+
 # Specify additional settings applicable to every component
 global_compiler_flag_list := -Wall
 global_link_flags         := -Wl,foo

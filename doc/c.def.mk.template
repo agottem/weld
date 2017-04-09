@@ -66,13 +66,20 @@ include_path_list := /some/other/include
 
 # Specify a list of libraries this component should link against.  These libraries
 # should be libraries which are part of the source tree and can be built.  Only
-# the library name should be specified
+# the library name should be specified.
 source_lib_list := my_foo_lib my_bar_lib
 
 # Specify a list of external libraries this component should link against.  These
 # libraries should exist outside of the source tree.  Typically system libraries or
-# third party libraries are set here
+# third party libraries are set here.  The toolchain will select the most
+# appropriate option, which may be a shared or static library
 lib_list := GL glut
+
+# Specify a list of external libraries this component should link against.  These
+# libraries should exist outside of the source tree.  Typically system libraries or
+# third party libraries are set here. A static version of the library must be
+# available for linking
+static_lib_list := ssl
 
 # Specify a list of library paths to use during the compilation of this component
 lib_path_list := /some/other/lib

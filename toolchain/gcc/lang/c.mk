@@ -7,6 +7,6 @@
 # This makefile defines settings for the c language
 
 
-compile_command := gcc
+compile_command := $(if $(gcc_opt_use_clang),clang,gcc)
 
 compiler_flag_list := -std=c99 $(compiler_flag_list)

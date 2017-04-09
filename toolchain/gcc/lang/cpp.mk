@@ -7,6 +7,6 @@
 # This makefile defines settings for the cpp language
 
 
-compile_command := g++
+compile_command := $(if $(gcc_opt_use_clang),clang++,g++)
 
 compiler_flag_list := -std=c++11 $(compiler_flag_list)

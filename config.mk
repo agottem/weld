@@ -16,20 +16,16 @@ arch            ?= amd64
 mode            ?= debug
 platform        ?= $(if $(WINDIR),win32,unix)
 shell_name      ?= $(if $(WINDIR),cmd,sh)
+c_toolchain     ?= gcc
 
 ifeq ($(platform),unix)
     os := $(shell uname)
     ifeq ($(os),Linux)
         unix_flavor ?= linux
-        c_toolchain ?= gcc
     else ifeq ($(os),Darwin)
         unix_flavor ?= darwin
-        c_toolchain ?= clang
-    else
+        gcc_opt_use_clang ?= 1
+    else ifeq ($(os),FreeBSD)
         unix_flavor ?= bsd
-        c_toolchain ?= gcc
     endif
 endif
-
-# If the toolchain wasn't set by the above conditions default it to gcc
-c_toolchain ?= gcc

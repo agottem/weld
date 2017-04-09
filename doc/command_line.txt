@@ -53,7 +53,7 @@ Once your weld project is setup, you can build by specifying the following targe
     # clean everything
     make clean
 
-    # build just a single component and it's dependencies
+    # build just a single component and its dependencies
     make my_component_name
 
     # build just a single source file for a component

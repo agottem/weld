@@ -17,9 +17,8 @@ weld_makefile := $(lastword $(MAKEFILE_LIST))
 weld_path     := $(dir $(weld_makefile))
 
 
-ifneq ($(config_file),)
-    include $(config_file)
-endif
+# If a config file is specified, include it
+-include $(config_file)
 
 # Set the defaults
 include $(weld_path)/config.mk
