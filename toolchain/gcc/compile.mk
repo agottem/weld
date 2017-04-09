@@ -12,7 +12,6 @@
 c_toolchain_path       :=
 def_source_path        :=
 def_obj_output_path    :=
-compiler_flag_list     :=
 source_file            :=
 def_source_file        :=
 obj_alias              :=
@@ -162,7 +161,7 @@ $(compile_goal) :
                 $(link_flag_list)                                                                 \
                 $(addprefix -L,$(call path_to_native,$(lib_path_list)))                           \
                 $(call path_to_native,$(obj_goal_file_list))                                      \
-                -Wl,--start-group $(addprefix -l,$(lib_list) $(source_lib_list)) -Wl,--end-group)
+                -Wl,--start-group $(addprefix -l,$(lib_list) $(source_lib_list)) $(raw_lib_list) -Wl,--end-group)
     endif
 
 .PHONY : clean_$(name)_def_compile
