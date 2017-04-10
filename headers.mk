@@ -12,15 +12,11 @@
 def_header_path        :=
 def_header_output_path :=
 header_file            :=
+header_name            :=
 def_header_file        :=
 header_alias           :=
 dest_path              :=
 header_goal_list       :=
-
-
-ifneq ($(call list_contains_char,$(header_list),/),)
-    $(call def_error,header_list must contain only the header file name and the file must live in the components include directory)
-endif
 
 
 # Figure out the include path for this component definition
@@ -32,8 +28,9 @@ define header_file_rule
     $$(call debug_info,header specified: $(1))
 
     header_file     := $(1)
+    header_name     := $$(notdir $$(header_file))
     def_header_file := $$(def_header_path)/$$(header_file)
-    header_alias    := $$(name)/$$(header_file)
+    header_alias    := $$(name)/$$(header_name)
 
     header_goal_list := $$(header_alias) $$(header_goal_list)
 

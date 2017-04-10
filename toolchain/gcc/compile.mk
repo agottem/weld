@@ -13,6 +13,7 @@ c_toolchain_path       :=
 def_source_path        :=
 def_obj_output_path    :=
 source_file            :=
+source_name            :=
 def_source_file        :=
 obj_alias              :=
 obj_goal_list          :=
@@ -25,13 +26,6 @@ full_compile_goal_path :=
 c_toolchain_path    := $(weld_path)/toolchain/gcc
 def_source_path     := $(def_path)/$(def_source_subdir)
 def_obj_output_path := $(obj_output_path)/$(name)
-
-
-# Perform validation of this component definition to make sure it's suitable
-# for compilation
-ifneq ($(call list_contains_char,$(source_list),/),)
-    $(call def_error,source_list must contain only the source file name and the file must live in the components source directory)
-endif
 
 
 # Add the weld project's lib and header paths to the specified lib
@@ -71,8 +65,9 @@ define source_file_rule
     $(call debug_info,source specified: $(1))
 
     source_file     := $(1)
+    source_name     := $$(notdir $(1))
     def_source_file := $$(def_source_path)/$$(source_file)
-    obj_alias       := $$(name)/$$(basename $$(source_file)).o
+    obj_alias       := $$(name)/$$(basename $$(source_name)).o
 
     obj_goal_list := $$(obj_alias) $$(obj_goal_list)
 
