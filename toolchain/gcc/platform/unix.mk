@@ -18,5 +18,5 @@ endif
 ifeq ($(unix_flavor), bsd)
     definition_list := _BSD_SOURCE $(definition_list)
 else ifeq ($(unix_flavor), linux)
-    definition_list := _XOPEN_SOURCE=700 _BSD_SOURCE $(definition_list)
+    definition_list := _DEFAULT_SOURCE $(definition_list)
 endif
