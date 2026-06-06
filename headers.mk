@@ -14,14 +14,15 @@ def_header_output_path :=
 header_file            :=
 header_name            :=
 def_header_file        :=
+header_output_subdir   :=
 header_alias           :=
-dest_path              :=
 header_goal_list       :=
 
 
 # Figure out the include path for this component definition
 def_header_path        := $(def_path)/$(def_include_subdir)
-def_header_output_path := $(header_output_path)/$(name)
+header_output_subdir   := $(global_header_prefix)$(name)
+def_header_output_path := $(header_output_path)/$(header_output_subdir)
 
 define header_file_rule
 
@@ -30,18 +31,15 @@ define header_file_rule
     header_file     := $(1)
     header_name     := $$(notdir $$(header_file))
     def_header_file := $$(def_header_path)/$$(header_file)
-    header_alias    := $$(name)/$$(header_name)
+    header_alias    := $$(header_output_subdir)/$$(header_name)
 
     header_goal_list := $$(header_alias) $$(header_goal_list)
-
-    directory_list := $$(dest_path) $$(directory_list)
 
     # Define an alias for the header file so the user can do
     # "make name/header.h" on the command line
     vpath $$(header_alias) $$(header_output_path)
 
     # Set the target specific variables and dependencies for this header
-    $$(header_alias) : header_path     := $$(header_path)
     $$(header_alias) : def_header_file := $$(def_header_file)
     $$(header_alias) : header_alias    := $$(header_alias)
     $$(header_alias) : $$(def_deps)
