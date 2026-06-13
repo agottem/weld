@@ -9,4 +9,4 @@
 
 compile_command := $(if $(gcc_opt_use_clang),clang,gcc)
 
-compiler_flag_list := -std=c99 $(compiler_flag_list)
+compiler_flag_list := -std=c11 $(compiler_flag_list)
