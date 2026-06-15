@@ -13,4 +13,4 @@ bin_output_path      := $(output_path)/bin
 lib_output_path      := $(output_path)/lib
 obj_output_path      := $(output_path)/obj
 header_output_path   := $(output_path)/include
-resource_output_path := $(output_path)/bin
+resource_output_path := $(output_path)

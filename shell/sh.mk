@@ -14,7 +14,7 @@ path_to_universal = $(1)
 path_to_native = $(1)
 
 # Find all files of the specified name beneath the specified path
-find_files = $(strip $(call path_to_universal,$(shell find $(call path_to_native,$(1)) -name $(call path_to_native,$(2)))))
+find_files = $(strip $(call path_to_universal,$(shell find $(call path_to_native,$(1)) -type f -name "$(call path_to_native,$(2))")))
 
 # Create a symlink to a file (requires passing --check-symlink-times on make command line)
 # soft_copy = $(strip ln -s -f $(call path_to_native,$(abspath $(1)) $(abspath $(2))))

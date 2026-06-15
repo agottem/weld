@@ -11,7 +11,6 @@ source_path     ?= .
 build_path      ?= ./build/out
 include_subdir  ?= include
 source_subdir   ?= source
-resource_subdir ?= resource
 arch            ?= amd64
 mode            ?= debug
 platform        ?= $(if $(WINDIR),win32,unix)

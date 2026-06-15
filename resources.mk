@@ -9,30 +9,41 @@
 
 # This makefile is included for each component definition so clear out
 # any variables used by this makefile
-def_resource_path  :=
-resource_file      :=
+resource_spec      :=
+spec_words         :=
+resource_source    :=
+resource_dest      :=
 def_resource_file  :=
 resource_alias     :=
 dest_path          :=
 resource_goal_list :=
 
-
-# Figure out the resource path for this component definition
-def_resource_path := $(def_path)/$(def_resource_subdir)
-
 define resource_file_rule
 
     $$(call debug_info,resource specified: $(1))
 
-    resource_file     := $(1)
-    def_resource_file := $$(def_resource_path)/$$(resource_file)
-    resource_alias    := $$(resource_file)
+    resource_spec := $(1)
+    spec_words    := $$(subst :, ,$$(resource_spec))
+    ifneq ($$(words $$(spec_words)),2)
+        $$(call def_error,invalid resource syntax: $$(resource_spec))
+    endif
 
-    dest_path := $$(dir $$(resource_output_path)/$$(resource_file))
+    resource_source := $$(word 1,$$(spec_words))
+    resource_dest   := $$(word 2,$$(spec_words))
+    ifeq ($$(resource_source),)
+        $$(call def_error,invalid resource syntax: $$(resource_spec))
+    endif
+    ifeq ($$(resource_dest),)
+        $$(call def_error,invalid resource syntax: $$(resource_spec))
+    endif
+
+    def_resource_file := $$(def_path)/$$(resource_source)
+    resource_alias    := $$(resource_dest)
+
+    dest_path := $$(dir $$(resource_output_path)/$$(resource_dest))
 
     resource_goal_list := $$(resource_alias) $$(resource_goal_list)
-
-    directory_list := $$(dest_path) $$(directory_list)
+    directory_list     := $$(dest_path) $$(directory_list)
 
     # Define an alias for the resource file so the user can do
     # "make path/to/resource" on the command line

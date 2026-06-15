@@ -17,7 +17,6 @@ define def_file_rule
     def_deps            :=
     def_include_subdir  :=
     def_source_subdir   :=
-    def_resource_subdir :=
     name                :=
     type                :=
     lang                :=
@@ -47,10 +46,6 @@ define def_file_rule
 
     ifeq ($$(def_source_subdir),)
         def_source_subdir := $$(source_subdir)
-    endif
-
-    ifeq ($$(def_resource_subdir),)
-        def_resource_subdir := $$(resource_subdir)
     endif
 
 

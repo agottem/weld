@@ -14,7 +14,7 @@ path_to_universal = $(subst \,/,$(1))
 path_to_native = $(subst /,\,$(1))
 
 # Find all files of the specified name beneath the specified path
-find_files = $(strip $(call path_to_universal,$(shell dir /B /S $(call path_to_native,$(1)/$(2)))))
+find_files = $(strip $(call path_to_universal,$(shell dir /A:-D /B /S $(call path_to_native,$(1)/$(2)))))
 
 # Windows doesn't support symlinking so soft and hard copy both
 # make copies'
