@@ -17,7 +17,7 @@ debug_info = $(if $(debug_weld),$(info debug-weld: $(1)),)
 def_error = $(error $(def_file): $(1))
 
 # Convert a component definition file to the components root path
-def_file_to_root_path = $(patsubst %/$(def_file_name),%,$(1))
+def_file_to_root_path = $(patsubst %/,%,$(dir $(1)))
 
 # Check if any values in a list contain a specific character
 list_contains_char = $(if $(filter-out $(words $(1)) 0, $(words $(subst $(2), ,$(1)))),1,)

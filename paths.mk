@@ -6,7 +6,7 @@
 
 # This make file derives all the necessary paths the weld build will
 # require
-def_file_name := def.mk
+def_file_name := *def.mk
 
 output_path          := $(build_path)/$(platform)/$(arch)/$(mode)
 bin_output_path      := $(output_path)/bin
