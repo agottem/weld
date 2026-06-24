@@ -16,6 +16,7 @@ mode            ?= debug
 platform        ?= $(if $(WINDIR),win32,unix)
 shell_name      ?= $(if $(WINDIR),cmd,sh)
 c_toolchain     ?= gcc
+project_prefix  ?=
 
 ifeq ($(platform),unix)
     os := $(shell uname)

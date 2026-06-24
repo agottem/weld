@@ -9,24 +9,26 @@
 
 # This makefile is included for each component definition so clear out
 # any variables used by this makefile
-c_toolchain_path       :=
-def_source_path        :=
-def_obj_output_path    :=
-source_file            :=
-source_name            :=
-def_source_file        :=
-obj_alias              :=
-obj_goal_list          :=
-obj_goal_file_list     :=
-compile_goal           :=
-compile_goal_path      :=
-full_compile_goal_path :=
+c_toolchain_path        :=
+def_source_path         :=
+def_obj_output_path     :=
+source_file             :=
+source_name             :=
+def_source_file         :=
+obj_alias               :=
+obj_goal_list           :=
+obj_goal_file_list      :=
+project_artifact_prefix :=
+project_source_lib_list :=
+compile_goal            :=
+compile_goal_path       :=
+full_compile_goal_path  :=
 
 
-c_toolchain_path    := $(weld_path)/toolchain/gcc
-def_source_path     := $(def_path)/$(def_source_subdir)
-def_obj_output_path := $(obj_output_path)/$(name)
-
+c_toolchain_path        := $(weld_path)/toolchain/gcc
+def_source_path         := $(def_path)/$(def_source_subdir)
+def_obj_output_path     := $(obj_output_path)/$(name)
+project_artifact_prefix := $(if $(project_prefix),$(project_prefix)-,)
 
 # Add the weld project's lib and header paths to the specified lib
 # and include path lists
@@ -92,9 +94,10 @@ endef
 # Expand the source file rule for each source specified
 $(foreach file,$(source_list),$(eval $(call source_file_rule,$(file))))
 
-obj_goal_file_list     := $(addprefix $(obj_output_path)/,$(obj_goal_list))
-source_lib_file_list   := $(addsuffix .a,$(addprefix lib,$(source_lib_list)))
-full_compile_goal_path := $(dir $(compile_goal_path)/$(compile_goal))
+obj_goal_file_list      := $(addprefix $(obj_output_path)/,$(obj_goal_list))
+project_source_lib_list := $(addprefix $(project_artifact_prefix),$(source_lib_list))
+source_lib_file_list    := $(addsuffix .a,$(addprefix lib,$(project_source_lib_list)))
+full_compile_goal_path  := $(dir $(compile_goal_path)/$(compile_goal))
 
 
 # Add the necessary output directories to the list of directories to create
@@ -128,15 +131,15 @@ $(obj_goal_list) :
             -c $(call path_to_native,$(def_source_file)))
 
 # The actual recipe for linking a library or binary
-$(compile_goal) : compile_command    := $(compile_command)
-$(compile_goal) : link_flag_list     := $(link_flag_list)
-$(compile_goal) : compile_goal       := $(compile_goal)
-$(compile_goal) : compile_goal_path  := $(compile_goal_path)
-$(compile_goal) : obj_goal_file_list := $(obj_goal_file_list)
-$(compile_goal) : lib_path_list      := $(lib_path_list)
-$(compile_goal) : lib_list           := $(lib_list)
-$(compile_goal) : static_lib_list    := $(static_lib_list)
-$(compile_goal) : source_lib_list    := $(source_lib_list)
+$(compile_goal) : compile_command         := $(compile_command)
+$(compile_goal) : link_flag_list          := $(link_flag_list)
+$(compile_goal) : compile_goal            := $(compile_goal)
+$(compile_goal) : compile_goal_path       := $(compile_goal_path)
+$(compile_goal) : obj_goal_file_list      := $(obj_goal_file_list)
+$(compile_goal) : lib_path_list           := $(lib_path_list)
+$(compile_goal) : lib_list                := $(lib_list)
+$(compile_goal) : static_lib_list         := $(static_lib_list)
+$(compile_goal) : project_source_lib_list := $(project_source_lib_list)
 $(compile_goal) : $(obj_goal_list)
 $(compile_goal) : $(source_lib_file_list)
 $(compile_goal) : | $(full_compile_goal_path)
@@ -156,7 +159,7 @@ $(compile_goal) :
                 $(addprefix -L,$(call path_to_native,$(lib_path_list)))                           \
                 $(call path_to_native,$(obj_goal_file_list))                                      \
                 -Wl,--start-group                                                                 \
-                $(addprefix -l,$(lib_list) $(source_lib_list))                                    \
+                $(addprefix -l,$(lib_list) $(project_source_lib_list))                            \
                 $(addsuffix .a,$(addprefix -l:lib,$(static_lib_list)))                            \
                 -Wl,--end-group)
     endif

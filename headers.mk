@@ -21,7 +21,7 @@ header_goal_list       :=
 
 # Figure out the include path for this component definition
 def_header_path        := $(def_path)/$(def_include_subdir)
-header_output_subdir   := $(global_header_prefix)$(name)
+header_output_subdir   := $(if $(project_prefix),$(project_prefix)/$(name),$(name))
 def_header_output_path := $(header_output_path)/$(header_output_subdir)
 
 define header_file_rule

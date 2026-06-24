@@ -31,6 +31,15 @@ global_definition_list    := MY_PROJECT_NAME
 global_include_path_list  := /third/party/include/path
 global_lib_path           := /third/party/lib/path
 
+# Set optional variables below
+#
+# If project_prefix is set, 'lib' components will have their header dependencies installed to:
+#     include/<project_prefix>/<lib-component-name>/...
+#
+# Additionally, bin and lib build artifacts will be named:
+#     lib/lib<project_prefix>-<lib-component-name>.a
+#     bin/<project_prefix>-<bin-component-name>
+project_prefix := my-proj
 
 # Include the "weld.mk" file in the weld build system directory
 include /path/to/weld/install/weld.mk

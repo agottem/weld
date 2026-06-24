@@ -8,12 +8,12 @@
 
 
 ifeq ($(type), bin)
-    compile_goal      := $(patsubst $(output_path)/%,%,$(bin_output_path))/$(name).exe
+    compile_goal      := $(patsubst $(output_path)/%,%,$(bin_output_path))/$(project_artifact_prefix)$(name).exe
     compile_goal_path := $(output_path)
 
     link_flag_list := -mwindows $(link_flag_list)
 else
-    compile_goal      := lib$(name).a
+    compile_goal      := lib$(project_artifact_prefix)$(name).a
     compile_goal_path := $(lib_output_path)
 endif
 
