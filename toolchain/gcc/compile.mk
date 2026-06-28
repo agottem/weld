@@ -40,17 +40,7 @@ definition_list := $(global_definition_list) $(definition_list)
 
 # Specify a default set of compiler flags in addition to those
 # flags specified by the component definition
-compiler_flag_list := -g                              \
-                      -fstrict-aliasing               \
-                      -funsigned-char                 \
-                      -Wall                           \
-                      -Winline                        \
-                      -Wmissing-field-initializers    \
-                      -Wsign-compare                  \
-                      -Wstrict-aliasing=1             \
-                      -pedantic                       \
-                      $(global_compiler_flag_list)    \
-                      $(compiler_flag_list)
+compiler_flag_list := $(global_compiler_flag_list) $(compiler_flag_list)
 
 # Add the global link flags to the component definition's list
 link_flag_list := $(global_link_flag_list) $(link_flag_list)
