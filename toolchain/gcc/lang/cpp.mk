@@ -9,4 +9,4 @@
 
 compile_command := $(if $(gcc_opt_use_clang),clang++,g++)
 
-compiler_flag_list := -std=c++11 $(compiler_flag_list)
+compiler_flag_list := -std=c++23 $(compiler_flag_list)
