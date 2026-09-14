@@ -37,7 +37,8 @@ define resource_file_rule
         $$(call def_error,invalid resource syntax: $$(resource_spec))
     endif
 
-    def_resource_file := $$(def_path)/$$(resource_source)
+    is_rel_file       := $$(patsubst /%,,$$(resource_source))
+    def_resource_file := $$(if $$(is_rel_file),$$(def_path)/$$(resource_source),$$(resource_source))
     resource_alias    := $$(resource_dest)
 
     dest_path := $$(dir $$(resource_output_path)/$$(resource_dest))
